@@ -3,6 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Ticker Kripto</title>
+</head>
+<body>
+  <h1>Form Pencarian Ticker</h1>
+  
+  <form id="api-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="symbol">Symbol:</label>
+    <input type="text" id="symbol" name="symbol" required><br><br>
+
+    <label for="price-usd">Price (USD):</label>
+    <input type="text" id="price-usd" name="price_usd" required><br><br>
+
+    <label for="volume-24h">Volume 24H:</label>
+    <input type="text" id="volume-24h" name="volume24h" required><br><br>
+
+    <label for="change-24h">Change 24H:</label>
+    <input type="text" id="change-24h" name="change24h" required><br><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    const jsonData = {
+      "id": 101,
+      "advice": "Alway do anything for love, but don't do that.",
+      "date": "2015-12-08"
+    };
+
+    const form = document.getElementById('api-form');
+    const nameInput = document.getElementById('name');
+    const symbolInput = document.getElementById('symbol');
+    const priceUsdInput = document.getElementById('price-usd');
+    const volume24hInput = document.getElementById('volume-24h');
+    const change24hInput = document.getElementById('change-24h');
+
+    // Mengisi nilai awal input dengan data dari JSON
+    nameInput.value = jsonData.name || '';
+    symbolInput.value = jsonData.symbol || '';
+    priceUsdInput.value = jsonData.price_usd || '';
+    volume24hInput.value = jsonData.volume24h || '';
+    change24hInput.value = jsonData.change24h || '';
+
+    // Menangani pengiriman form
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Mengambil nilai input
+      const name = nameInput.value;
+      const symbol = symbolInput.value;
+      const priceUsd = priceUsdInput.value;
+      const volume24h = volume24hInput.value;
+      const change24h = change24hInput.value;
+
+      // Melakukan apa pun yang perlu dilakukan dengan nilai input
+      // Di sini, kita hanya menampilkan nilai input ke console
+      console.log('Name:', name);
+      console.log('Symbol:', symbol);
+      console.log('Price (USD):', priceUsd);
+      console.log('Volume 24H:', volume24h);
+      console.log('Change 24H:', change24h);
+    });
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Ticker Koin Kripto</title>
   <style>
     table {
