@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Ticker Koin Kripto</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #000000;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Daftar Ticker Koin Kripto</h1>
+  
+  <table id="ticker-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nama</th>
+        <th>Simbol</th>
+        <th>Harga (USD)</th>
+        <th>Volume 24 Jam</th>
+        <th>Perubahan 24 Jam</th>
+      </tr>
+    </thead>
+    <tbody id="ticker-data"></tbody>
+  </table>
+
+  <script>
+    fetch('https://api.coinlore.net/api/tickers/')
+      .then(response => response.json())
+      .then(data => {
+        const tickerData = document.getElementById('ticker-data');
+
+        // Mengekstrak daftar ticker koin kripto
+        const tickers = data.data;
+
+        // Membuat baris HTML untuk setiap ticker
+        let tickerHTML = '';
+        tickers.forEach((ticker, index) => {
+          const rank = ticker.rank;
+          const name = ticker.name;
+          const symbol = ticker.symbol;
+          const priceUsd = ticker.price_usd;
+          const volume24h = ticker.volume24;
+          const change24h = ticker.percent_change_24h;
+
+          tickerHTML += `
+            <tr>
+              <td>${rank}</td>
+              <td>${name}</td>
+              <td>${symbol}</td>
+              <td>${priceUsd}</td>
+              <td>${volume24h}</td>
+              <td>${change24h}</td>
+            </tr>
+          `;
+        });
+
+        // Menampilkan daftar ticker koin kripto
+        tickerData.innerHTML = tickerHTML;
+      })
+      .catch(error => {
+        console.log('Terjadi kesalahan:', error);
+      });
+  </script>
+</body>
+</html>
