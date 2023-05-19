@@ -3,6 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Ticker Koin Kripto</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #000000;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Daftar Ticker Koin Kripto</h1>
+
+  <form id="ticker-form">
+    <label for="name">Nama:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="symbol">Simbol:</label>
+    <input type="text" id="symbol" name="symbol" required><br><br>
+
+    <label for="price-usd">Harga (USD):</label>
+    <input type="text" id="price-usd" name="price_usd" required><br><br>
+
+    <label for="volume-24h">Volume 24 Jam:</label>
+    <input type="text" id="volume-24h" name="volume24h" required><br><br>
+
+    <label for="change-24h">Perubahan 24 Jam:</label>
+    <input type="text" id="change-24h" name="change24h" required><br><br>
+
+    <input type="submit" value="Tambah">
+  </form>
+
+  <table id="ticker-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nama</th>
+        <th>Simbol</th>
+        <th>Harga (USD)</th>
+        <th>Volume 24 Jam</th>
+        <th>Perubahan 24 Jam</th>
+      </tr>
+    </thead>
+    <tbody id="ticker-data"></tbody>
+  </table>
+
+  <script>
+    fetch('https://api.coinlore.net/api/tickers/')
+      .then(response => response.json())
+      .then(data => {
+        const tickerData = document.getElementById('ticker-data');
+
+        // Mengekstrak daftar ticker koin kripto
+        const tickers = data.data;
+
+        // Membuat baris HTML untuk setiap ticker
+        let tickerHTML = '';
+        tickers.forEach((ticker, index) => {
+          const rank = ticker.rank;
+          const name = ticker.name;
+          const symbol = ticker.symbol;
+          const priceUsd = ticker.price_usd;
+          const volume24h = ticker.volume24;
+          const change24h = ticker.percent_change_24h;
+
+          tickerHTML += `
+            <tr>
+              <td>${rank}</td>
+              <td>${name}</td>
+              <td>${symbol}</td>
+              <td>${priceUsd}</td>
+              <td>${volume24h}</td>
+              <td>${change24h}</td>
+            </tr>
+          `;
+        });
+
+        // Menampilkan daftar ticker koin kripto
+        tickerData.innerHTML = tickerHTML;
+      })
+      .catch(error => {
+        console.log('Terjadi kesalahan:', error);
+      });
+
+    // Menangani pengiriman form
+    const form = document.getElementById('ticker-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Mengambil nilai input
+      const name = document.getElementById('name').value;
+      const symbol = document.getElementById('symbol').value;
+      const priceUsd = document.getElementById('price-usd').value;
+      const volume24h = document.getElementById('volume-24h').value;
+      const change24h = document.getElementById('change-24h').value;
+
+      // Menambahkan baris baru ke dalam tabel
+      const tickerTable = document.getElementById('ticker-table');
+      const newRow = tickerTable.insertRow();
+      const newRankCell = newRow.insertCell();
+      const newNameCell = newRow.insertCell();
+      const newSymbolCell = newRow.insertCell();
+      const newPriceUsdCell = newRow.insertCell();
+      const newVolume24hCell = newRow.insertCell();
+      const newChange24hCell = newRow.insertCell();
+
+      // Mengatur nilai sel-sel baru
+      newRankCell.textContent = tickerTable.rows.length - 1;
+      newNameCell.textContent = name;
+      newSymbolCell.textContent = symbol;
+      newPriceUsdCell.textContent = priceUsd;
+      newVolume24hCell.textContent = volume24h;
+      newChange24hCell.textContent = change24h;
+
+      // Mengosongkan nilai input
+      document.getElementById('name').value = '';
+      document.getElementById('symbol').value = '';
+      document.getElementById('price-usd').value = '';
+      document.getElementById('volume-24h').value = '';
+      document.getElementById('change-24h').value = '';
+    });
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Ticker Kripto</title>
 </head>
 <body>
